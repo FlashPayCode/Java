@@ -94,7 +94,7 @@ public class FlashPay extends FlashPayBase  {
 	}
 
 	/**
-	 * checkout 新增訂單
+	 * checkout 訂單
 	 * 
 	 * @param Order 訂單
 	 * @return 訂單Form
@@ -221,6 +221,8 @@ public class FlashPay extends FlashPayBase  {
 
 	//ver以後需要不同版本API核對使用會用到
 	private String decodeFormatData(String data) {
+		if("".equals(data))
+			throw new FlashPayException("feedback data is null");
 		try {
 			String dat = "", chk = "";//, ver = "";
 			String[] result = data.split("&");

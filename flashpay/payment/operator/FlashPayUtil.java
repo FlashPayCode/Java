@@ -17,7 +17,7 @@ import flashpay.payment.exception.FlashPayException;
 
 public class FlashPayUtil {
 
-	public static final String APIVERSION = "0.0.0";
+	public static final String APIVERSION = "1.0.0";
 
 
 
@@ -50,7 +50,9 @@ public class FlashPayUtil {
 			return response.toString();
 		} catch (Exception e) {
 			throw new FlashPayException("httpPOST error : " + e.getMessage());
-		}
+		}finally {
+			return "";
+		} 
 	}
 
 	private static void trustAllHosts(HttpsURLConnection connection) {

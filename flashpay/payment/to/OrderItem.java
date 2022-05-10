@@ -37,7 +37,7 @@ public class OrderItem {
 	} 
 	
 	public String getOrderItemStr() {
-		return this.name +" "+ String.format("%f",this.price) +" X "+ this.quantity +" "+this.unit;
+		return this.name +" "+ String.format("%.2f",this.price) +" X "+ String.valueOf(this.quantity) +" "+this.unit;
 	}
 
 		
