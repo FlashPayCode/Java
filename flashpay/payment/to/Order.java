@@ -1,6 +1,10 @@
 package flashpay.payment.to;
 
+import java.time.LocalDateTime;
+
 import flashpay.payment.operator.FlashPayUtil;
+import flashpay.payment.operator.PaymentMethods;
+import flashpay.payment.operator.PaymentMethodsItem;
 
 public class Order {
 	
@@ -13,15 +17,15 @@ public class Order {
 	//訂單號碼
 	private String  ord_no;
 	//交易類別
-	private int pay_typ=1;
+	private PaymentMethods pay_type;
 	//總金額
-	private double  amt;
+	private double  amt=0;
 	//幣別
 	private String  cur="NTD";
 	//商品清單
 	private String order_desc;
 	//分期
-	private int  install_period;
+	private PaymentMethodsItem  install_period;
 	//連絡電話
 	private String  phone;
 	//預設值
@@ -30,6 +34,11 @@ public class Order {
 	private String  return_url;
 	//交易成功後頁面跳轉URL(用於消費者返回商城) 
 	private String  client_url;
+	//交易時間日期
+	private LocalDateTime ord_time;
+	//商店名稱
+	private  String sto_id;
+	
 	
 	
 	public String getVer() {
@@ -42,9 +51,6 @@ public class Order {
 
 	public String getMer_id() {
 		return mer_id;
-	}
-	public void setMer_id(String mer_id) {
-		this.mer_id = mer_id;
 	}
 	public String getOrd_no() {
 		return ord_no;
@@ -70,12 +76,6 @@ public class Order {
 		this.order_desc = order_desc;
 	}
 
-	public int getInstall_period() {
-		return install_period;
-	}
-	public void setInstall_period(int install_period) {
-		this.install_period = install_period;
-	}
 	public String getPhone() {
 		return phone;
 	}
@@ -85,9 +85,7 @@ public class Order {
 	public String getUse_redeem() {
 		return use_redeem;
 	}
-	public void setUse_redeem(String use_redeem) {
-		this.use_redeem = use_redeem;
-	}
+
 	public String getReturn_url() {
 		return return_url;
 	}
@@ -101,25 +99,46 @@ public class Order {
 		this.client_url = client_url;
 	}
 
-	public int getPay_typ() {
-		return pay_typ;
-	}
 
-	public void setPay_typ(int pay_typ) {
-		this.pay_typ = pay_typ;
-	}
-
-	public void setVer(String ver) {
-		this.ver = ver;
-	}
-
-	public void setTx_type(String tx_type) {
-		this.tx_type = tx_type;
-	}
 
 	public void setCur(String cur) {
 		this.cur = cur;
 	}
+
+
+
+	public LocalDateTime getOrd_time() {
+		return ord_time;
+	}
+
+	public void setOrd_time(LocalDateTime ord_time) {
+		this.ord_time = ord_time;
+	}
+
+	public String getSto_id() {
+		return sto_id;
+	}
+
+	public void setSto_id(String sto_id) {
+		this.sto_id = sto_id;
+	}
+
+	public PaymentMethods getPay_type() {
+		return pay_type;
+	}
+
+	public void setPay_type(PaymentMethods pay_type) {
+		this.pay_type = pay_type;
+	}
+
+	public PaymentMethodsItem getInstall_period() {
+		return install_period;
+	}
+
+	public void setInstall_period(PaymentMethodsItem install_period) {
+		this.install_period = install_period;
+	}
+	
 	
 	
 }

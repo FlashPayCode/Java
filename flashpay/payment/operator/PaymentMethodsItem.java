@@ -7,7 +7,8 @@ public enum PaymentMethodsItem {
     Credit_6(6,"Credit_6"),
     Credit_12(12,"Credit_12"),
     Credit_18(18,"Credit_18"),
-    Credit_24(24,"Credit_24");
+    Credit_24(24,"Credit_24"),
+	Union_all(0,"Union_all");
    // other(-1,"other");
 
 	private int vule;

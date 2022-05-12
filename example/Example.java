@@ -1,6 +1,7 @@
 package flashpay.payment.example;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import flashpay.payment.FlashPay;
@@ -25,24 +26,38 @@ public class Example {
 	}
 
 	//新增訂單
-	private static Order createrOrder()
+	private static String createrOrder()
 	{
+		FlashPay f =new FlashPay("");
 		var arrayitem = new ArrayList<OrderItem>();
 		var item =new OrderItem();
 		item.setName("123");
 		item.setPrice(15.20);
 		item.setQuantity(5);
-		item.setUnit("個");		
+		item.setUnit("unit");		
 		arrayitem.add(item);
-		Order order =flashpay.createOrder("99999920", arrayitem, "test", "test","test", PaymentMethods.Credit, PaymentMethodsItem.Credit_all);
-		return order;
+		String ordListStr="";
+		for(OrderItem oitem : arrayitem)
+			ordListStr+=oitem.getOrderItemStr();
+		var od = new Order();
+	    od.setOrd_no("99999920");
+	    od.setOrd_time(LocalDateTime.now());
+	    od.setOrder_desc(ordListStr);
+		od.setAmt(76.00);
+		od.setSto_id("My store");
+		od.setPay_type(PaymentMethods.Credit);
+		od.setInstall_period( PaymentMethodsItem.Credit_all);
+	    od.setPhone("0912345678");
+		od.setClient_url("test");
+		od.setReturn_url("test");
+		return f.createOrder(od);
 	};
 	
 	
-	//結帳頁面
-	private static String checkout(Order order)
+	//結帳
+	private static String checkout(String orderJsonStr)
 	{
-		return flashpay.checkout(order);
+		return flashpay.checkout(orderJsonStr);
 	}
 	
 	

@@ -1,11 +1,9 @@
 package flashpay.payment;
 
 import java.io.File;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,10 +17,9 @@ import com.google.gson.JsonObject;
 
 import flashpay.payment.exception.FlashPayException;
 import flashpay.payment.operator.FlashPayUtil;
-import flashpay.payment.operator.PaymentMethods;
 import flashpay.payment.operator.PaymentMethodsItem;
 import flashpay.payment.to.Order;
-import flashpay.payment.to.OrderItem;
+
 
 public class FlashPay extends FlashPayBase  {
 
@@ -54,43 +51,54 @@ public class FlashPay extends FlashPayBase  {
 	/**
 	 * create Order 新增訂單
 	 *
-	 * @param ArrayList<OrderItem> 商品列表
+	 * @param order_desc           商品列表
 	 * @param clinetUrl            要回傳交易結果導向的畫面(顯示給消費者)
+	 * @param amt                  總金額
 	 * @param returnURL            交易結果訊息回傳(回傳交易訊息)
 	 * @param phone                消費者聯絡電話
 	 * @param pay                  交易方式
 	 * @param installPeriod        分期付款期數
-	 * @return 訂單order
+	 * @param order_time           訂單時間
+	 * @param sto_id               商店名稱
+	 * @return JsonString
 	 */
-	public Order createOrder(String orderNo, ArrayList<OrderItem> orderItem, String clinetUrl, String returnUrl,
-			String phone, PaymentMethods pay, PaymentMethodsItem installPeriod) {
-		if (orderItem == null || orderItem.size() <= 0 || orderNo == null || "".equals(orderNo) || clinetUrl == null
-				|| "".equals(clinetUrl) || returnUrl == null || "".equals(returnUrl) || pay == null
-				|| installPeriod == null)
+	public String createOrder(Order order) {
+		if ( order.getOrd_no() == null 
+				|| order == null
+				|| "".equals(order.getOrd_no()) 
+				|| order.getClient_url() == null
+				|| "".equals(order.getClient_url()) 
+				|| order.getReturn_url() == null 
+				|| "".equals(order.getReturn_url()) 
+				|| order.getOrd_time() == null
+				|| order.getInstall_period() ==null
+				|| order.getPay_type()==null)
 			throw new FlashPayException("Incomplete order information");
-		Order order = new Order();
-		order.setMer_id(FlashPayBase.MerchantID);
-		order.setPay_typ(pay.getVule());
-
-		if (pay.getVule() == 1)
-			order.setInstall_period(installPeriod.getVule());
-		else
-			order.setInstall_period(0);
-		order.setOrd_no(orderNo);
-		order.setPhone(phone);
-		order.setClient_url(clinetUrl);
-		order.setReturn_url(returnUrl);
-		order.setInstall_period(0);
-		String orderItemStr = "";
-		double amt = 0;
-		for (OrderItem item : orderItem) {
-			orderItemStr += item.getOrderItemStr() + ",";
-			amt += (item.getPrice() * item.getQuantity());
-		}
-		BigDecimal bd = new BigDecimal(amt).setScale(2, RoundingMode.HALF_UP);
-		order.setAmt(bd.doubleValue());
-		order.setOrder_desc(orderItemStr);
-		return order;
+		//銀聯卡暫時不提供分期
+		if(order.getPay_type().getVule()==2)
+			order.setInstall_period(PaymentMethodsItem.Union_all);
+		if(order.getPay_type().getVule()== 1 && "Union_all".equals(order.getInstall_period().getPaymentItem()))
+			throw new FlashPayException("Install_period can't use Union_all");
+		JsonObject jsonObj = new JsonObject();
+		jsonObj.addProperty("pay_type", order.getPay_type().getVule());
+		jsonObj.addProperty("mer_id", FlashPayBase.MerchantID);
+		jsonObj.addProperty("order_desc",order.getOrder_desc());
+		jsonObj.addProperty("ord_no",order.getOrd_no());
+		jsonObj.addProperty("client_url",order.getClient_url());
+		jsonObj.addProperty("return_url",order.getReturn_url());
+		//暫時只提供台幣交易
+		jsonObj.addProperty("cur","NTD");
+		jsonObj.addProperty("amt",order.getAmt());
+		jsonObj.addProperty("sto_id",order.getSto_id());
+		jsonObj.addProperty("phone",order.getPhone());
+		jsonObj.addProperty("use_redeem",order.getUse_redeem());
+		jsonObj.addProperty("ver", order.getVer());
+		jsonObj.addProperty("tx_type",order.getTx_type() );
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+		String orderTime=order.getOrd_time().format(format);
+		jsonObj.addProperty("ord_time", orderTime);
+		String json = new Gson().toJson(jsonObj);
+		return json;
 	}
 
 	/**
@@ -99,9 +107,7 @@ public class FlashPay extends FlashPayBase  {
 	 * @param Order 訂單
 	 * @return 訂單Form
 	 */
-	public String checkout(Order order) {
-		Gson odrerJson = new Gson();
-		String dataJson = odrerJson.toJson(order).toString();
+	public String checkout(String dataJson) {
 		var map = encodeFormatData(FlashPayBase.MerchantID, dataJson);
 		return getCheckoutHtml(map, FlashPayBase.ServerUrl + "/trade.php");
 	}
