@@ -139,7 +139,7 @@ public class FlashPay extends FlashPayBase  {
 		var map = encodeFormatData(FlashPayBase.MerchantID, json);
 		Gson gson = new Gson();
 		String jsonString = gson.toJson(map);
-		String result = FlashPayUtil.httpPost(FlashPayBase.ServerUrl + "/querytrade.php?XDEBUG_SESSION_START=web",
+		String result = FlashPayUtil.httpPost(FlashPayBase.ServerUrl + "/querytrade.php",
 				jsonString, "UTF8");
 		String decodeResult = decodeFormatData(result);
 		log.info("queryOrder result : " + decodeResult);
@@ -167,7 +167,7 @@ public class FlashPay extends FlashPayBase  {
 		var map = encodeFormatData(FlashPayBase.MerchantID, json);
 		Gson gson = new Gson();
 		String jsonString = gson.toJson(map);
-		String result = FlashPayUtil.httpPost(FlashPayBase.ServerUrl + "/querytrade.php?XDEBUG_SESSION_START=web",
+		String result = FlashPayUtil.httpPost(FlashPayBase.ServerUrl + "/querytrade.php",
 				jsonString, "UTF8");
 		String decodeResult = decodeFormatData(result);
 		log.info("queryMultiOrder result : " + decodeResult);
@@ -190,7 +190,7 @@ public class FlashPay extends FlashPayBase  {
 		var map = encodeFormatData(FlashPayBase.MerchantID, json);
 		Gson gson = new Gson();
 		String jsonString = gson.toJson(map);
-		String result = FlashPayUtil.httpPost(FlashPayBase.ServerUrl + "/querytrade.php?XDEBUG_SESSION_START=web",
+		String result = FlashPayUtil.httpPost(FlashPayBase.ServerUrl + "/querytrade.php",
 				jsonString, "UTF8");
 		String decodeResult = decodeFormatData(result);
 		log.info("queryMultiOrder result : " + decodeResult);
@@ -227,7 +227,7 @@ public class FlashPay extends FlashPayBase  {
 
 	//ver以後需要不同版本API核對使用會用到
 	private String decodeFormatData(String data) {
-		if("".equals(data))
+		if(data==null ||"".equals(data))
 			throw new FlashPayException("feedback data is null");
 		try {
 			String dat = "", chk = "";//, ver = "";

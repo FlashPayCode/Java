@@ -50,9 +50,7 @@ public class FlashPayUtil {
 			return response.toString();
 		} catch (Exception e) {
 			throw new FlashPayException("httpPOST error : " + e.getMessage());
-		}finally {
-			return "";
-		} 
+		}
 	}
 
 	private static void trustAllHosts(HttpsURLConnection connection) {
