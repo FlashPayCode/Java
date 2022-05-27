@@ -28,7 +28,7 @@ public class Order {
 	private PaymentMethodsItem  install_period;
 	//連絡電話
 	private String  phone;
-	//預設值
+	//紅利折抵
 	private String  use_redeem="0";
 	//交易成功後回打URL(用於訂單狀態更新) 
 	private String  return_url;
@@ -82,9 +82,7 @@ public class Order {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getUse_redeem() {
-		return use_redeem;
-	}
+
 
 	public String getReturn_url() {
 		return return_url;
@@ -138,6 +136,18 @@ public class Order {
 	public void setInstall_period(PaymentMethodsItem install_period) {
 		this.install_period = install_period;
 	}
+
+	public String getUse_redeem() {
+		return use_redeem;
+	}
+
+	public void setUse_redeem(String use_redeem) {
+		this.use_redeem = use_redeem;
+	}
+
+
+
+	
 	
 	
 	

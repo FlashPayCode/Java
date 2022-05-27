@@ -60,6 +60,7 @@ public class FlashPay extends FlashPayBase  {
 	 * @param installPeriod        分期付款期數
 	 * @param order_time           訂單時間
 	 * @param sto_id               商店名稱
+	 * @param use_redeem           起用紅利折抵
 	 * @return JsonString
 	 */
 	public String createOrder(Order order) {
@@ -94,7 +95,7 @@ public class FlashPay extends FlashPayBase  {
 		jsonObj.addProperty("use_redeem",order.getUse_redeem());
 		jsonObj.addProperty("ver", order.getVer());
 		jsonObj.addProperty("tx_type",order.getTx_type() );
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String orderTime=order.getOrd_time().format(format);
 		jsonObj.addProperty("ord_time", orderTime);
 		String json = new Gson().toJson(jsonObj);
