@@ -49,18 +49,18 @@ public class FlashPay extends FlashPayBase  {
 	}
 
 	/**
-	 * create Order ·s¼W­q³æ
+	 * create Order æ–°å¢è¨‚å–® 
 	 *
-	 * @param order_desc           °Ó«~¦Cªí
-	 * @param clinetUrl            ­n¦^¶Ç¥æ©öµ²ªG¾É¦Vªºµe­±(Åã¥Üµ¹®ø¶OªÌ)
-	 * @param amt                  Á`ª÷ÃB
-	 * @param returnURL            ¥æ©öµ²ªG°T®§¦^¶Ç(¦^¶Ç¥æ©ö°T®§)
-	 * @param phone                ®ø¶OªÌÁpµ¸¹q¸Ü
-	 * @param pay                  ¥æ©ö¤è¦¡
-	 * @param installPeriod        ¤À´Á¥I´Ú´Á¼Æ
-	 * @param order_time           ­q³æ®É¶¡
-	 * @param sto_id               °Ó©±¦WºÙ
-	 * @param use_redeem           °_¥Î¬õ§Q§é©è
+	 * @param order_desc           å•†å“åˆ—è¡¨
+	 * @param clinetUrl            è¦å›å‚³äº¤æ˜“çµæœå°å‘çš„ç•«é¢(é¡¯ç¤ºçµ¦æ¶ˆè²»è€…)
+	 * @param amt                  ç¸½é‡‘é¡
+	 * @param returnURL            äº¤æ˜“çµæœè¨Šæ¯å›å‚³(å›å‚³äº¤æ˜“è¨Šæ¯)
+	 * @param phone                æ¶ˆè²»è€…è¯çµ¡é›»è©±
+	 * @param pay                  äº¤æ˜“æ–¹å¼
+	 * @param installPeriod        åˆ†æœŸä»˜æ¬¾æœŸæ•¸
+	 * @param order_time           è¨‚å–®æ™‚é–“
+	 * @param sto_id               å•†åº—åç¨±
+	 * @param use_redeem           èµ·ç”¨ç´…åˆ©æŠ˜æŠµ
 	 * @return JsonString
 	 */
 	public String createOrder(Order order) {
@@ -75,7 +75,7 @@ public class FlashPay extends FlashPayBase  {
 				|| order.getInstall_period() ==null
 				|| order.getPay_type()==null)
 			throw new FlashPayException("Incomplete order information");
-		//»ÈÁp¥d¼È®É¤£´£¨Ñ¤À´Á
+		//éŠ€è¯å¡æš«æ™‚ä¸æä¾›åˆ†æœŸ
 		if(order.getPay_type().getVule()==2)
 			order.setInstall_period(PaymentMethodsItem.Union_all);
 		if(order.getPay_type().getVule()== 1 && "Union_all".equals(order.getInstall_period().getPaymentItem()))
@@ -87,7 +87,7 @@ public class FlashPay extends FlashPayBase  {
 		jsonObj.addProperty("ord_no",order.getOrd_no());
 		jsonObj.addProperty("client_url",order.getClient_url());
 		jsonObj.addProperty("return_url",order.getReturn_url());
-		//¼È®É¥u´£¨Ñ¥x¹ô¥æ©ö
+		//æš«æ™‚åªæä¾›å°å¹£äº¤æ˜“
 		jsonObj.addProperty("cur","NTD");
 		jsonObj.addProperty("amt",order.getAmt());
 		jsonObj.addProperty("sto_id",order.getSto_id());
@@ -103,10 +103,10 @@ public class FlashPay extends FlashPayBase  {
 	}
 
 	/**
-	 * checkout ­q³æ
+	 * checkout è¨‚å–®
 	 * 
-	 * @param Order ­q³æ
-	 * @return ­q³æForm
+	 * @param Order è¨‚å–®
+	 * @return è¨‚å–®Form
 	 */
 	public String checkout(String dataJson) {
 		var map = encodeFormatData(FlashPayBase.MerchantID, dataJson);
@@ -114,9 +114,9 @@ public class FlashPay extends FlashPayBase  {
 	}
 
 	/**
-	 * checkoutFeedback ³B²z¦^¶Ç¸ê°T
+	 * checkoutFeedback è™•ç†å›å‚³è³‡è¨Š
 	 * 
-	 * @param response ¦^¶Ç¸ê®Æ
+	 * @param response å›å‚³è³‡æ–™
 	 * @return OrderFeedback
 	 */
 	public String checkoutFeedback(String response) {
@@ -126,10 +126,10 @@ public class FlashPay extends FlashPayBase  {
 	}
 
 	/**
-	 * queryOrder ¬d¸ß³æµ§­q³æ¸ê°T
+	 * queryOrder æŸ¥è©¢å–®ç­†è¨‚å–®è³‡è¨Š
 	 * 
-	 * @param orderNO ­q³æ½s¸¹
-	 * @return json¦r¦ê
+	 * @param orderNO è¨‚å–®ç·¨è™Ÿ
+	 * @return jsonå­—ä¸²
 	 */
 	public String queryOrder(String orderNO) {
 		JsonObject jsonObj = new JsonObject();
@@ -148,11 +148,11 @@ public class FlashPay extends FlashPayBase  {
 	}
 
 	/**
-	 * queryOrder ¬d¸ß¦hµ§­q³æ¸ê°T
+	 * queryOrder æŸ¥è©¢å¤šç­†è¨‚å–®è³‡è¨Š
 	 * 
-	 * @param beginDate °_©l®É¶¡
-	 * @param endDate   µ²§ô®É¶¡
-	 * @return json¦r¦ê
+	 * @param beginDate èµ·å§‹æ™‚é–“
+	 * @param endDate   çµæŸæ™‚é–“
+	 * @return jsonå­—ä¸²
 	 */
 	public String queryMultiOrder(LocalDate beginDate, LocalDate endDate) {
 		Duration duration = Duration.between(beginDate.atStartOfDay(),endDate.atStartOfDay());
@@ -176,9 +176,9 @@ public class FlashPay extends FlashPayBase  {
 	}
 	
 	/**
-	 *  doTrade ¨ú®ø±ÂÅv(¥Ø«e¥u´£¨Ñ¨ú®ø±ÂÅv)
-	 *  @param orderNO ­q³æ½s¸¹
-	 *  @param orderPrice ­q³æª÷ÃB
+	 *  doTrade å–æ¶ˆæˆæ¬Š(ç›®å‰åªæä¾›å–æ¶ˆæˆæ¬Š)
+	 *  @param orderNO è¨‚å–®ç·¨è™Ÿ
+	 *  @param orderPrice è¨‚å–®é‡‘é¡
 	 */
 	public String doTrade(String orderNO ,double orderPrice)
 	{
@@ -226,7 +226,7 @@ public class FlashPay extends FlashPayBase  {
 		return map;
 	}
 
-	//ver¥H«á»İ­n¤£¦Pª©¥»API®Ö¹ï¨Ï¥Î·|¥Î¨ì
+	//verä»¥å¾Œéœ€è¦ä¸åŒç‰ˆæœ¬APIæ ¸å°ä½¿ç”¨æœƒç”¨åˆ°
 	private String decodeFormatData(String data) {
 		if(data==null ||"".equals(data))
 			throw new FlashPayException("feedback data is null");

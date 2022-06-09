@@ -25,7 +25,7 @@ public class Example {
 		flashpay = new FlashPay("");
 	}
 
-	//·s¼W­q³æ
+	//æ–°å¢è¨‚å–®  
 	private static String createrOrder()
 	{
 		FlashPay f =new FlashPay("");
@@ -54,24 +54,24 @@ public class Example {
 	};
 	
 	
-	//µ²±b
+	//çµå¸³
 	private static String checkout(String orderJsonStr)
 	{
 		return flashpay.checkout(orderJsonStr);
 	}
 	
 	
-	//³æµ§¥æ©ö¬d¸ß
+	//å–®ç­†äº¤æ˜“æŸ¥è©¢
 	private static String queryOrder()
 	{
 	  return flashpay.queryOrder("269393");
 	}
-	
+	//å¤šç­†äº¤æ˜“æŸ¥è©¢
 	private static String  queryMultiOrder()
 	{
 		return flashpay.queryMultiOrder(LocalDate.parse("2022-04-01"), LocalDate.parse("2022-04-20"));
 	}
-	
+	//å–æ¶ˆè«‹æ¬¾
 	private static String  cancelAuthorization()
 	{
 		return flashpay.doTrade("2679",441.00);
