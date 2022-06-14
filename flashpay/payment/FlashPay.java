@@ -247,7 +247,10 @@ public class FlashPay extends FlashPayBase  {
 					throw new FlashPayException("chk does not match");
 				return AESdecrypt(dat);
 			} else
-				throw new FlashPayException("chk or dat nor found");
+			{
+				log.error(data);
+				return data;
+			}
 		} catch (Exception e) {
 			log.error(data);
 			return data;
