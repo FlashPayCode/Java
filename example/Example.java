@@ -77,6 +77,11 @@ public class Example {
 		return flashpay.doTrade("2679",441.00);
 	}
 	
+	//交易資訊回傳請參考API規格書資料解密請使用encodeFormatData()函式進行解密
+	private String tradeReturn()
+	{
+		return flashpay.decodeFormatData("交易回傳資訊");
+	}
 	
 
 }

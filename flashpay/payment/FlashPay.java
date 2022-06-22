@@ -227,7 +227,7 @@ public class FlashPay extends FlashPayBase  {
 	}
 
 	//ver以後需要不同版本API核對使用會用到
-	private String decodeFormatData(String data) {
+	public String decodeFormatData(String data) {
 		if(data==null ||"".equals(data))
 			throw new FlashPayException("feedback data is null");
 		try {
