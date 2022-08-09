@@ -18,9 +18,8 @@ import flashpay.payment.exception.FlashPayException;
 public class FlashPayUtil {
 
 	public static final String APIVERSION = "1.0.0";
-
-
-
+	
+	//httpPost
 	public final static String httpPost(String url, String urlParameters, String encoding) {
 		try {
 			URL obj = new URL(url);
@@ -55,35 +54,24 @@ public class FlashPayUtil {
 
 	private static void trustAllHosts(HttpsURLConnection connection) {
 		X509TrustManager easyTrustManager = new X509TrustManager() {
-
 			@Override
 			public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-				// Oh, I am easy!
 			}
-
 			@Override
 			public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-				// Oh, I am easy!
 			}
-
 			@Override
 			public X509Certificate[] getAcceptedIssuers() {
 				return null;
 			}
-
 		};
-
 		// Create a trust manager that does not validate certificate chains
 		TrustManager[] trustAllCerts = new TrustManager[] { easyTrustManager };
-
 		// Install the all-trusting trust manager
 		try {
 			SSLContext sc = SSLContext.getInstance("TLS");
-
 			sc.init(null, trustAllCerts, new java.security.SecureRandom());
-
 			connection.setSSLSocketFactory(sc.getSocketFactory());
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new FlashPayException("SSL TLS ERROR : " + e.getMessage());

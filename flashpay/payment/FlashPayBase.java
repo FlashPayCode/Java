@@ -18,7 +18,7 @@ import flashpay.payment.exception.FlashPayException;
 
 public class FlashPayBase {
 	
-	protected static String mode="";
+	protected static String Mode="";
 	protected static String ServerUrl="";
 	protected static String HashKey;
 	protected static String HashIV;
@@ -27,17 +27,17 @@ public class FlashPayBase {
 	protected static String TradeInFoUrl;
 	protected static String TradeDetailUrl;
 	
+	private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
+	
 	public FlashPayBase() {
 		try {			
 			Properties props= new Properties();
 			props.load(getClass().getResourceAsStream("config/flashpay.properties"));			
-			mode=props.getProperty("FlashPayMode");
-			ServerUrl=props.getProperty("FlashPay."+mode+".url");
-			HashKey=props.getProperty("FlashPay."+mode+".hashKey");
-			HashIV=props.getProperty("FlashPay."+mode+".hashIV");
-			MerchantID=props.getProperty("FlashPay."+mode+".merchantID");
-			
-			
+			Mode=props.getProperty("FlashPayMode");
+			ServerUrl=props.getProperty("FlashPay."+Mode+".url");
+			HashKey=props.getProperty("FlashPay."+Mode+".hashKey");
+			HashIV=props.getProperty("FlashPay."+Mode+".hashIV");
+			MerchantID=props.getProperty("FlashPay."+Mode+".merchantID");
 		}catch (FileNotFoundException e ) {
             e.printStackTrace();
             throw new FlashPayException("Config not found ");
@@ -48,9 +48,10 @@ public class FlashPayBase {
 		
 	}
 	
-	private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
-
-	public static String bin2hex(byte[] bs) {
+    /*
+     *  bytes to hex
+     */
+	private static String bin2hex(byte[] bs) {
 		StringBuffer sb = new StringBuffer("");
 		int bit;
 		for (byte element : bs) {
@@ -61,8 +62,11 @@ public class FlashPayBase {
 		}
 		return sb.toString();
 	}
-
-	public static byte[] hex2bin(String hex) {
+	
+    /*
+     * hex to bytes
+     */
+	private static byte[] hex2bin(String hex) {
 		String digital = String.valueOf(hexArray);
 		char[] hex2char = hex.toCharArray();
 		byte[] bytes = new byte[hex.length() / 2];
@@ -74,7 +78,9 @@ public class FlashPayBase {
 		}
 		return bytes;
 	}
-
+    /*
+     * add PKCS7Padding
+     */
 	private static byte[] addPKCS7Padding(byte[] data, int iBlockSize) {
 		int iLength = data.length;
 		byte cPadding = (byte) (iBlockSize - (iLength % iBlockSize));
@@ -84,8 +90,19 @@ public class FlashPayBase {
 			output[i] = cPadding;
 		return output;
 	}
-
-	public static String AESencrypt(String data) {
+    /*
+     * remove PKCS7Padding
+     */
+	private static byte[] removePKCS7Padding(byte[] data, int size) {
+		byte pad = data[data.length - 1];
+		byte[] output = new byte[data.length - pad];
+		System.arraycopy(data, 0, output, 0, data.length - pad);
+		return output;
+	}
+    /*
+     * AES encrypt
+     */
+	public final static String AESencrypt(String data) {
 		try {
 			SecretKey key = new SecretKeySpec(HashKey.getBytes("UTF-8"), "AES");
 			IvParameterSpec iv = new IvParameterSpec(HashIV.getBytes("UTF-8"));
@@ -98,15 +115,10 @@ public class FlashPayBase {
 			throw new FlashPayException("AES encrypt error : " + e.getMessage());
 		}
 	}
-
-	private static byte[] removePKCS7Padding(byte[] data, int size) {
-		byte pad = data[data.length - 1];
-		byte[] output = new byte[data.length - pad];
-		System.arraycopy(data, 0, output, 0, data.length - pad);
-		return output;
-	}
-
-	public static String AESdecrypt(String data) {
+    /*
+     * AES decrypt
+     */
+	public final static String AESdecrypt(String data) {
 		try {
 			SecretKey key = new SecretKeySpec(HashKey.getBytes("UTF-8"), "AES");
 			IvParameterSpec iv = new IvParameterSpec(HashIV.getBytes("UTF-8"));
@@ -120,6 +132,9 @@ public class FlashPayBase {
 		}
 	}
 	
+    /*
+     * Hash
+     */
 	public final static String Hash(String data) {
 		MessageDigest md = null;
 		try {
@@ -130,9 +145,6 @@ public class FlashPayBase {
 		}
 		return bin2hex(md.digest());
 	}
-	
-	
-	
 	
 	
 }

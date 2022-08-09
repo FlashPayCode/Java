@@ -49,7 +49,7 @@ public class FlashPay extends FlashPayBase  {
 	}
 
 	/**
-	 * create Order 新增訂單 
+	 * create Order 新增訂單
 	 *
 	 * @param order_desc           商品列表
 	 * @param clinetUrl            要回傳交易結果導向的畫面(顯示給消費者)
@@ -103,13 +103,13 @@ public class FlashPay extends FlashPayBase  {
 	}
 
 	/**
-	 * checkout 訂單
+	 * checkOut 訂單
 	 * 
 	 * @param Order 訂單
 	 * @return 訂單Form
 	 */
-	public String checkout(String dataJson) {
-		var map = encodeFormatData(FlashPayBase.MerchantID, dataJson);
+	public String checkOut(String dataJson) {
+		var map = encodeData(FlashPayBase.MerchantID, dataJson);
 		return getCheckoutHtml(map, FlashPayBase.ServerUrl + "/trade.php");
 	}
 
@@ -120,7 +120,7 @@ public class FlashPay extends FlashPayBase  {
 	 * @return OrderFeedback
 	 */
 	public String checkoutFeedback(String response) {
-		String result =decodeFormatData(response);
+		String result =decodeData(response);
 		log.info("queryOrder result : " + result);
 		return result;		
 	}
@@ -137,12 +137,12 @@ public class FlashPay extends FlashPayBase  {
 		jsonObj.addProperty("ord_no", orderNO);
 		jsonObj.addProperty("tx_type", 107);
 		String json = new Gson().toJson(jsonObj);
-		var map = encodeFormatData(FlashPayBase.MerchantID, json);
+		var map = encodeData(FlashPayBase.MerchantID, json);
 		Gson gson = new Gson();
 		String jsonString = gson.toJson(map);
 		String result = FlashPayUtil.httpPost(FlashPayBase.ServerUrl + "/querytrade.php",
 				jsonString, "UTF8");
-		String decodeResult = decodeFormatData(result);
+		String decodeResult = decodeData(result);
 		log.info("queryOrder result : " + decodeResult);
 		return decodeResult;
 	}
@@ -165,12 +165,12 @@ public class FlashPay extends FlashPayBase  {
 		jsonObj.addProperty("start_date", beginDate.toString());
 		jsonObj.addProperty("end_date", endDate.toString());
 		String json = new Gson().toJson(jsonObj);
-		var map = encodeFormatData(FlashPayBase.MerchantID, json);
+		var map = encodeData(FlashPayBase.MerchantID, json);
 		Gson gson = new Gson();
 		String jsonString = gson.toJson(map);
 		String result = FlashPayUtil.httpPost(FlashPayBase.ServerUrl + "/querytrade.php",
 				jsonString, "UTF8");
-		String decodeResult = decodeFormatData(result);
+		String decodeResult = decodeData(result);
 		log.info("queryMultiOrder result : " + decodeResult);
 		return decodeResult;
 	}
@@ -188,12 +188,12 @@ public class FlashPay extends FlashPayBase  {
 		jsonObj.addProperty("ord_no", orderNO);
 		jsonObj.addProperty("amt", orderPrice);
 		String json = new Gson().toJson(jsonObj);
-		var map = encodeFormatData(FlashPayBase.MerchantID, json);
+		var map = encodeData(FlashPayBase.MerchantID, json);
 		Gson gson = new Gson();
 		String jsonString = gson.toJson(map);
 		String result = FlashPayUtil.httpPost(FlashPayBase.ServerUrl + "/querytrade.php",
 				jsonString, "UTF8");
-		String decodeResult = decodeFormatData(result);
+		String decodeResult = decodeData(result);
 		log.info("queryMultiOrder result : " + decodeResult);
 		return decodeResult;
 	}
@@ -212,7 +212,7 @@ public class FlashPay extends FlashPayBase  {
 		return builder.toString();
 	}
 
-	private Map<String, Object> encodeFormatData(String MerchantID, String data) {
+	private Map<String, Object> encodeData(String MerchantID, String data) {
 		String checkData = HashKey + data + HashIV;
 		String checkKeys = Hash(checkData);
 		String tradeData = AESencrypt(data);
@@ -227,7 +227,7 @@ public class FlashPay extends FlashPayBase  {
 	}
 
 	//ver以後需要不同版本API核對使用會用到
-	public String decodeFormatData(String data) {
+	public String decodeData(String data) {
 		if(data==null ||"".equals(data))
 			throw new FlashPayException("feedback data is null");
 		try {

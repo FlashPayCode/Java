@@ -25,8 +25,8 @@ public class Example {
 		flashpay = new FlashPay("");
 	}
 
-	//新增訂單  
-	private static String createrOrder()
+	//新增訂單
+	private  String createrOrder()
 	{
 		FlashPay f =new FlashPay("");
 		var arrayitem = new ArrayList<OrderItem>();
@@ -55,33 +55,30 @@ public class Example {
 	
 	
 	//結帳
-	private static String checkout(String orderJsonStr)
+	private  String checkout(String orderJsonStr)
 	{
-		return flashpay.checkout(orderJsonStr);
+		return flashpay.checkOut(orderJsonStr);
 	}
 	
-	
 	//單筆交易查詢
-	private static String queryOrder()
+	private  String queryOrder()
 	{
 	  return flashpay.queryOrder("269393");
 	}
 	//多筆交易查詢
-	private static String  queryMultiOrder()
+	private  String  queryMultiOrder()
 	{
 		return flashpay.queryMultiOrder(LocalDate.parse("2022-04-01"), LocalDate.parse("2022-04-20"));
 	}
 	//取消請款
-	private static String  cancelAuthorization()
+	private  String  cancelAuthorization()
 	{
 		return flashpay.doTrade("2679",441.00);
 	}
 	
-	//交易資訊回傳請參考API規格書資料解密請使用encodeFormatData()函式進行解密
+	//交易資訊回傳請參考API規格書資料解密請使用encodeData()函式進行解密
 	private String tradeReturn()
 	{
-		return flashpay.decodeFormatData("交易回傳資訊");
+		return flashpay.decodeData("交易回傳資訊");
 	}
-	
-
 }

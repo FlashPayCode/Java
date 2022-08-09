@@ -2,13 +2,13 @@ package flashpay.payment.to;
 
 public class OrderItem {
 	
-	//名稱
+
 	private String name;
-	//價格
+
 	private double price;
-	//單位
+
 	private String unit;
-	//數量
+
 	private int  quantity;
 	
 	public String getName() {
