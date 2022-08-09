@@ -226,7 +226,7 @@ public class FlashPay extends FlashPayBase  {
 		return map;
 	}
 
-	//ver以後需要不同版本API核對使用會用到
+	//ver以後需要不同版本API核對使用會用到  
 	public String decodeData(String data) {
 		if(data==null ||"".equals(data))
 			throw new FlashPayException("feedback data is null");

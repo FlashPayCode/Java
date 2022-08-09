@@ -17,7 +17,7 @@ import flashpay.payment.exception.FlashPayException;
 
 public class FlashPayUtil {
 
-	public static final String APIVERSION = "1.0.0";
+	public static final String APIVERSION = "1.0.0"; 
 	
 	//httpPost
 	public final static String httpPost(String url, String urlParameters, String encoding) {

@@ -4,7 +4,7 @@ public enum PaymentMethodsItem {
 	
 	Credit_all(0,"Credit_all"),
     Credit_3(3,"Credit_3"),
-    Credit_6(6,"Credit_6"),
+    Credit_6(6,"Credit_6"), 
     Credit_12(12,"Credit_12"),
     Credit_18(18,"Credit_18"),
     Credit_24(24,"Credit_24"),

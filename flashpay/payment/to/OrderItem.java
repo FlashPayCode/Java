@@ -2,7 +2,7 @@ package flashpay.payment.to;
 
 public class OrderItem {
 	
-
+ 
 	private String name;
 
 	private double price;

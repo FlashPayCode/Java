@@ -79,7 +79,7 @@ public class FlashPayBase {
 		return bytes;
 	}
     /*
-     * add PKCS7Padding
+     * add PKCS7Padding  
      */
 	private static byte[] addPKCS7Padding(byte[] data, int iBlockSize) {
 		int iLength = data.length;

@@ -12,7 +12,7 @@ public class FlashPayException extends Error{
 	
 	
 	public FlashPayException(String msg)
-	{
+	{ 
 		this.exceptionMessage = msg;
 		log.error(exceptionMessage);
 	}

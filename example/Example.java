@@ -21,7 +21,7 @@ public class Example {
 	}
 	
 	private static void init(){
-		//you can set log4j ex: flashpay = new FlashPay(" .. /log4j.properties");
+		// you can set log4j ex: flashpay = new FlashPay(" .. /log4j.properties");
 		flashpay = new FlashPay("");
 	}
 

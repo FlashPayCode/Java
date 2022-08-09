@@ -6,7 +6,7 @@ import flashpay.payment.operator.FlashPayUtil;
 import flashpay.payment.operator.PaymentMethods;
 import flashpay.payment.operator.PaymentMethodsItem;
 
-public class Order {
+public class Order { 
 	
 
 	private String  ver =FlashPayUtil.APIVERSION; 

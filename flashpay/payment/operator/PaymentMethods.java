@@ -3,7 +3,7 @@ package flashpay.payment.operator;
 public enum PaymentMethods {
 	
 	Credit(1,"Credit"),
-	Union(2,"Union");
+	Union(2,"Union"); 
 	
 	private int vule;
 	
