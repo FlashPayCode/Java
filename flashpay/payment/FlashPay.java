@@ -121,7 +121,7 @@ public class FlashPay extends FlashPayBase  {
 	 */
 	public String checkoutFeedback(String response) {
 		String result =decodeData(response);
-		log.info("queryOrder result : " + result);
+		log.info("checkoutFeedback : " + result);
 		return result;		
 	}
 
